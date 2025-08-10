@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/fredianto2405/catetin-api/internal/auth"
+	"github.com/fredianto2405/catetin-api/internal/member"
 	"github.com/fredianto2405/catetin-api/pkg/errors"
 	"github.com/fredianto2405/catetin-api/pkg/logger"
 	"github.com/gin-contrib/cors"
@@ -38,6 +39,13 @@ func SetupRouter(db *sqlx.DB) *gin.Engine {
 	authHandler := auth.NewHandler(authService)
 	authGroup := r.Group("/api/v1/auth")
 	RegisterAuthRoutes(authGroup, authHandler)
+
+	// member routes
+	memberRepo := member.NewRepository(db)
+	memberService := member.NewService(memberRepo)
+	memberHandler := member.NewHandler(memberService)
+	memberGroup := r.Group("api/v1/members")
+	RegisterMemberRoutes(memberGroup, memberHandler)
 
 	return r
 }
