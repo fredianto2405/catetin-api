@@ -1,0 +1,189 @@
+{
+	"info": {
+		"_postman_id": "8108e696-1066-4565-8fc2-45bc6d7e05cc",
+		"name": "Catet.in API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47472768",
+		"_collection_link": "https://freddxant-dev-5494293.postman.co/workspace/freddxant.dev's-Workspace~dc650ca2-0fd0-4743-8670-150e64fb5507/collection/47472768-8108e696-1066-4565-8fc2-45bc6d7e05cc?action=share&source=collection_link&creator=47472768"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"if (response && response.data && response.data.access_token) {",
+									"    pm.environment.set(\"accessToken\", response.data.access_token);",
+									"    console.log(\"access token saved to environment:\", response.data.access_token);",
+									"} else {",
+									"    console.error(\"access token not found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"freddy@example.com\",\n    \"password\": \"Catetin@202\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success Example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"freddy@example.com\",\n    \"password\": \"Catetin@2025\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 10 Aug 2025 01:19:57 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "378"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"login berhasil\",\n    \"data\": {\n        \"email\": \"freddy@example.com\",\n        \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY3YjJlYjRkLWJmZmItNDdmYS1hNjVlLTRiNTRmNTI1ODMzMyIsImVtYWlsIjoiZnJlZGR5QGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaXNzIjoibXlhcHAiLCJleHAiOjE3NTQ4MzE5OTcsImlhdCI6MTc1NDc4ODc5N30.eK0EVyzMZ99939542g0FvFBcrq7QGynGl6mKpEj4jXE\",\n        \"role\": \"admin\"\n    }\n}"
+						},
+						{
+							"name": "Failure Example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"freddy@example.com\",\n    \"password\": \"Catetin@202\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 10 Aug 2025 01:22:05 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "50"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"password tidak valid\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"old_password\": \"@Catetin2025\",\n    \"new_password\": \"Catetin@2025\",\n    \"confirm_new_password\": \"Catetin@2025\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/change-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
